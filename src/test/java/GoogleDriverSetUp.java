@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 public class GoogleDriverSetUp {
     public ChromeDriver driver;
 
+    @Before
     public void driverSetUp() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -25,6 +26,7 @@ public class GoogleDriverSetUp {
         }
     }
 
+    @After
     public void driverClose() {
         driver.quit();
     }
