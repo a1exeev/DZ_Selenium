@@ -1,3 +1,5 @@
+import org.junit.After;
+import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,6 +9,7 @@ import java.io.InputStreamReader;
 public class GoogleDriverSetUp {
     public ChromeDriver driver;
 
+    @Before
     public void driverSetUp() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -23,6 +26,7 @@ public class GoogleDriverSetUp {
         }
     }
 
+    @After
     public void driverClose() {
         driver.quit();
     }
