@@ -18,8 +18,8 @@ public class GoogleDriverSetUp {
             System.setProperty("webdriver.chrome.driver", filePath);
             driver = new ChromeDriver();
         } catch (FileNotFoundException fnf) {
-            System.out.println("Ошибка! Файл по указанному адресу не найден. " +
-                    "Повторите запрос: ");
+            System.out.println(
+                    "Ошибка! Файл по указанному адресу не найден. Повторите запрос.");
         } catch (IOException ioe) {
             System.out.println("Ошибка: ");
             ioe.printStackTrace();
