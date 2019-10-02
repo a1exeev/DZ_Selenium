@@ -11,19 +11,8 @@ public class GoogleDriverSetUp {
 
     @Before
     public void driverSetUp() {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        try {
-            String filePath = reader.readLine();
-            System.setProperty("webdriver.chrome.driver", filePath);
-            driver = new ChromeDriver();
-        } catch (FileNotFoundException fnf) {
-            System.out.println(
-                    "Ошибка! Файл по указанному адресу не найден. Повторите запрос.");
-        } catch (IOException ioe) {
-            System.out.println("Ошибка: ");
-            ioe.printStackTrace();
-        }
+        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+        driver = new ChromeDriver();
     }
 
     @After

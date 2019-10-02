@@ -6,103 +6,98 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import static org.junit.Assert.*;
+import java.util.concurrent.TimeUnit;
 
 public class InsuranceTest extends GoogleDriverSetUp {
 
     @Test
     public void InsuranceTest() {
 
-        //п.1
         String site = "http://www.rgs.ru/";
         driver.get(site);
 
-        //п.2-3
-        WebElement elementHealth = driver.findElementByXPath(
-                "/html/body/div[4]/div/div[4]/a");
-        elementHealth.click();
+        findAndClick("/html/body/div[4]/div/div[4]/a");
 
-        WebDriverWait waitAfter1 = new WebDriverWait(driver, 7);
-        waitAfter1.until(ExpectedConditions.elementToBeClickable(By.linkText(
+        WebDriverWait wait0 = new WebDriverWait(driver, 7);
+        wait0.until(ExpectedConditions.elementToBeClickable(By.linkText(
                 "Добровольное медицинское страхование (ДМС)")));
-
         WebElement elementDMS = driver.findElementByXPath(
                 "/html/body/div[5]/div/div[1]/div[1]/div/a[1]");
         JavascriptExecutor executor = driver;
         executor.executeScript("arguments[0].click();", elementDMS);
 
-        WebDriverWait waitAfter2 = new WebDriverWait(driver, 7);
-
-        //п.4
-        Assert.assertEquals("ДМС — добровольное медицинское страхование",
+        String dmsTitle =
+                "ДМС 2019 | Рассчитать стоимость добровольного медицинского страхования и оформить ДМС в Росгосстрах";
+        Assert.assertEquals(dmsTitle,
                 driver.getTitle());
 
-        //п.5
-        WebElement elementSendRequest = driver.findElementByXPath(
-                "//*[@id=\"rgs-main-context-bar\"]/div/div/div/div/a[3]");
-        elementSendRequest.click();
+        findAndClick("/html/body/div[8]/div/div/div/div/a[3]");
 
-        WebDriverWait waitAfter3 = new WebDriverWait(driver, 7);
+        WebDriverWait wait2 = new WebDriverWait(driver, 7);
 
-        //п.6
-        WebElement elementFreeInsurance = driver.findElementByXPath(
-                "/html/body/div[9]/div/div/div/div[1]/h4/b");
-        Assert.assertEquals("Заявка на добровольное медицинское страхование",
-                elementFreeInsurance.getText());
+        String surnameToPrint = "Фамилия";
+        findAndFill("//*[@id=\"applicationForm\"]/div[2]/div[1]/input", surnameToPrint);
 
-        //п.7
-        String surname = "//*[@id=\"applicationForm\"]/div[2]/div[1]/input";
-        WebElement surnameToEnter = driver.findElementByXPath(surname);
-        surnameToEnter.sendKeys("Фамилия");
+        WebDriverWait wait4 = new WebDriverWait(driver, 3);
 
-        String name = "//*[@id=\"applicationForm\"]/div[2]/div[2]/input";
-        WebElement nameToEnter = driver.findElementByXPath(name);
-        nameToEnter.sendKeys("Имя");
+        String nameToPrint = "Имя";
+        findAndFill("//*[@id=\"applicationForm\"]/div[2]/div[2]/input", nameToPrint);
 
-        String patronymic = "//*[@id=\"applicationForm\"]/div[2]/div[3]/input";
-        WebElement patronymicToEnter = driver.findElementByXPath(patronymic);
-        patronymicToEnter.sendKeys("Отчество");
+        WebDriverWait wait5 = new WebDriverWait(driver, 3);
 
-        String region = "//*[@id=\"applicationForm\"]/div[2]/div[4]/select";
-        Select regionToSelect = new Select(driver.findElementByXPath(region));
-        regionToSelect.selectByVisibleText("Выберите...");
+        String patronymictoPrint = "Отчество";
+        findAndFill("//*[@id=\"applicationForm\"]/div[2]/div[3]/input", patronymictoPrint);
 
-        String phoneNumber = "//*[@id=\"applicationForm\"]/div[2]/div[5]/input";
-        WebElement phoneNumberToEnter = driver.findElementByXPath(phoneNumber);
-        phoneNumberToEnter.click();
-        phoneNumberToEnter.clear();
-        phoneNumberToEnter.sendKeys("8005553535");
+        WebDriverWait wait6 = new WebDriverWait(driver, 3);
 
-        String eMail = "//*[@id=\"applicationForm\"]/div[2]/div[6]/input";
-        WebElement eMailToEnter = driver.findElementByXPath(eMail);
-        eMailToEnter.sendKeys("qwertyqwerty");
+        String phoneNumberToPrint = "8005553535";
+        findAndFill("//*[@id=\"applicationForm\"]/div[2]/div[5]/input", phoneNumberToPrint);
 
-        String date = "//*[@id=\"applicationForm\"]/div[2]/div[7]/input";
-        WebElement dateToEnter = driver.findElementByXPath(date);
-        dateToEnter.sendKeys("20042020");
+        WebDriverWait wait7 = new WebDriverWait(driver, 3);
 
-        String comments = "//*[@id=\"applicationForm\"]/div[2]/div[8]/textarea";
-        WebElement commentsToEnter = driver.findElementByXPath(comments);
-        commentsToEnter.sendKeys("Комментарии");
+        String eMailToPrint = "qwertyqwerty";
+        findAndFill("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[6]/input", eMailToPrint);
 
-        String checkBox = "//*[@id=\"applicationForm\"]/div[2]/div[9]/label/input";
-        WebElement checkBoxToFill = driver.findElementByXPath(checkBox);
-        checkBoxToFill.click();
+        WebDriverWait wait8 = new WebDriverWait(driver, 3);
 
-        String sendButton = "//*[@id=\"button-m\"]";
-        WebElement sendButtonToPress = driver.findElementByXPath(sendButton);
-        sendButtonToPress.click();
+        String commentsToPrint = "Комментарии";
+        findAndFill("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[8]/textarea", commentsToPrint);
 
-        Assert.assertEquals(surname, surnameToEnter.getText());
-        Assert.assertEquals(name, nameToEnter.getText());
-        Assert.assertEquals(patronymic, patronymicToEnter.getText());
-        Assert.assertEquals(eMail, eMailToEnter.getText());
-        Assert.assertEquals(comments, commentsToEnter.getText());
+        WebDriverWait wait9 = new WebDriverWait(driver, 3);
 
-        WebDriverWait waitAfter4 = new WebDriverWait(driver, 7);
+        findAndClick("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[9]/label/input");
 
-        String errorEMail = "//*[@id=\"applicationForm\"]/div[2]/div[6]/div/label/span";
+        WebDriverWait wait10 = new WebDriverWait(driver, 3);
+
+        String dateToPrint = "12.12.2019";
+        findAndFill("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[7]/input", dateToPrint);
+
+        WebDriverWait wait11 = new WebDriverWait(driver, 3);
+
+        findAndClick("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[10]/div/button");
+
+        WebDriverWait wait12 = new WebDriverWait(driver, 3);
+
+        Assert.assertEquals(surnameToPrint, driver.findElementByXPath("//*[@id=\"applicationForm\"]/div[2]/div[1]/input").getAttribute("inner text"));
+        Assert.assertEquals(nameToPrint, driver.findElementByXPath("//*[@id=\"applicationForm\"]/div[2]/div[2]/input").getAttribute("inner text"));
+        Assert.assertEquals(patronymictoPrint, driver.findElementByXPath("//*[@id=\"applicationForm\"]/div[2]/div[3]/input").getAttribute("inner text"));
+        Assert.assertEquals(eMailToPrint, driver.findElementByXPath("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[6]/input").getAttribute("inner text"));
+        Assert.assertEquals(commentsToPrint, driver.findElementByXPath("/html/body/div[9]/div/div/div/div[2]/div[2]/form/div[2]/div[8]/textarea").getAttribute("inner text"));
+
+        String error = "//*[@id=\"applicationForm\"]/div[2]/div[6]/div/label/span";
         Assert.assertEquals("Введите адрес электронной почты",
-                driver.findElementByXPath(errorEMail).getText());
+                driver.findElementByXPath(error).getAttribute("inner text"));
+    }
+
+    public WebElement findAndClick(String xpath){
+        WebElement element = driver.findElementByXPath(xpath);
+        element.click();
+        return element;
+    }
+
+    public WebElement findAndFill(String xpath, String content){
+        WebElement element = driver.findElementByXPath(xpath);
+        element.sendKeys(content);
+        return element;
     }
 }
